@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday My Love 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .step {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.5s ease;
+    }
+
+    .step.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 80px;
+      background: linear-gradient(90deg, #ff99cc, #ffccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Cake Styling */
+    .cake {
+      width: 200px;
+      margin-top: 20px;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 10px #ff66cc); }
+      to { filter: drop-shadow(0 0 25px #ff99ff); }
+    }
+
+    .cake-text {
+      font-size: 22px;
+      color: #ff99cc;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .cake-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: #ff99cc;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .cake-button:hover {
+      background: #ff66aa;
+    }
+
+    /* Romantic Message */
+    .romantic-message {
+      margin-top: 30px;
+      font-size: 1.5rem;
+      line-height: 1.8;
+      color: #ffccff;
+      display: none;
+      padding: 0 20px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Step 1: Greeting -->
+  <div class="step" id="step1">
+    <h1>✨ Happy 16th Birthday My Love ✨</h1>
+  </div>    
+
+  <!-- Step 2: Cake -->
+  <div class="step" id="step2">
+    <img src="cake.png" alt="Birthday Cake" class="cake" />
+    <p class="cake-text">🎂 16 yrs 🎂</p>
+    <button id="blow-candle" class="cake-button">Blow Candle 🕯</button>
+  </div>
+
+  <!-- Step 3: Romantic Message -->
+  <div class="step" id="step3">
+    <p class="romantic-message" id="romantic-message">
+“Happy Birthday, my love, my universe 🌌❤️. Every year, the world celebrates you once, but my heart celebrates you every single day. You’re not just the reason I smile, you’re the reason my soul feels at home. On your special day, I don’t wish you stars — because you are my brightest star. I don’t wish you love — because you already hold mine, endlessly and completely. I just promise you this: no matter how many candles we blow, how many years pass, my love for you will only grow wilder, deeper, stronger. Forever yours, my sweetest Kuchhu Puchhu jaisii rasmalaiiiii meraa babygurll shaantanuu😘😘💋💋💋💋💋😘😘😘💋.”
+    </p>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Step-by-step soft transitions
+    function showStep(id, delay) {
+      setTimeout(() => {
+        document.getElementById(id).classList.add("show");
+      }, delay);
+    }
+
+    window.onload = () => {
+      // Play music
+      const music = document.getElementById("bg-music");
+      music.play().catch(() => {
+        console.log("Music autoplay blocked, will play after user interaction.");
+      });
+
+      // Show steps
+      showStep("step1", 1000);   // Greeting
+      showStep("step2", 4000);   // Cake
+    };
+
+// Candle blowing
+document.getElementById("blow-candle").addEventListener("click", () => {
+  // First make sure music plays (this counts as a user action unlock)
+  music.play();
+
+  document.querySelector(".cake").style.opacity = "0.6"; // Candle blown
+  document.querySelector(".cake-text").innerText = "✨ I LOVEEE YOUUU SOO MUCHHH KUCHHHUU PUCHHUU ✨";
+
+  // Show final romantic message after a soft delay
+  setTimeout(() => {
+    document.getElementById("romantic-message").style.display = "block";
+    document.getElementById("step3").classList.add("show");
+    launchConfetti();
+  }, 1500);
+});
+
+
+    // Confetti burst
+    function launchConfetti() {
+      const duration = 3 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+    // Save & restore music progress
+const music = document.getElementById("bg-music");
+
+// When the page loads, check localStorage
+const savedTime = localStorage.getItem("musicTime");
+const wasPlaying = localStorage.getItem("isPlaying");
+
+if (savedTime) {
+  music.currentTime = savedTime;
+}
+if (wasPlaying === "true") {
+  music.play().catch(() => {
+    console.log("Music autoplay blocked until user interacts.");
+  });
+}
+
+// Before leaving/reloading the page
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem("musicTime", music.currentTime);
+  localStorage.setItem("isPlaying", !music.paused);
+});
+
+  </script>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+</body>
+</html>
